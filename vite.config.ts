@@ -14,7 +14,7 @@ export default defineConfig({
         { src: "src/static/*", dest: "" }, // Copy semua file di src/static ke dist/
       ],
     }),
-    // vueDevTools(),
+    vueDevTools(),
   ],
   resolve: {
     alias: {
