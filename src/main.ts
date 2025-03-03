@@ -20,6 +20,11 @@ import {
   VBtn,
   VCard,
   VCardTitle,
+  VList,
+  VListItem,
+  VListItemTitle,
+  VNavigationDrawer,
+  VDivider,
 } from "vuetify/components";
 import * as directives from "vuetify/directives";
 
@@ -35,6 +40,11 @@ const vuetify = createVuetify({
     VBtn,
     VCard,
     VCardTitle,
+    VList,
+    VListItem,
+    VListItemTitle,
+    VNavigationDrawer,
+    VDivider,
   },
   directives,
 });
