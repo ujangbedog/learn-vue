@@ -2,7 +2,24 @@
   <v-container fluid>
     <v-row>
       <!-- Sidebar untuk Tugas 1 -->
-      <SidebarTugasSatu />
+      <Sidebar 
+        title="Praktikum Tugas 1" 
+        :praktikumNumber="1"
+        :praktikumList="[
+          { 
+            name: 'Praktikum Satu', 
+            route: '/tugas/1/praktikum-satu' 
+          },
+          { 
+            name: 'Praktikum Dua', 
+            route: '/tugas/1/praktikum-dua' 
+          },
+          { 
+            name: 'Praktikum Tiga', 
+            route: '/tugas/1/praktikum-tiga' 
+          }
+        ]"
+      />
 
       <!-- Konten Utama -->
       <router-view></router-view> <!-- Tempat menampilkan konten praktikum -->
@@ -11,7 +28,7 @@
 </template>
 
 <script setup>
-import SidebarTugasSatu from "@/components/sidebar/SidebarTugasSatu.vue";
+import Sidebar from "@/components/Sidebar.vue";
 </script>
 
 <style scoped>
