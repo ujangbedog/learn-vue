@@ -7,13 +7,17 @@
     </v-card-title>
 
     <v-tabs 
-      v-model="tab"
+      v-model="activeTab"
       class="font-weight-bold"
       bg-color="#0a0a0a"
       color="#515e5c"
-      selected-class="active-tab"
     >
-      <v-tab v-for="item in items" :key="item.text" :to="item.route">
+      <v-tab 
+        v-for="item in items" 
+        :key="item.text" 
+        :value="item.route"
+        :to="item.route"
+      >
         {{ item.text }}
       </v-tab>
     </v-tabs>
@@ -25,7 +29,7 @@ import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const tab = ref(route.path);
+const activeTab = ref(route.path);
 
 const items = ref([
   { text: "Home", route: "/" },
@@ -34,21 +38,29 @@ const items = ref([
   { text: "Tugas 3", route: "/tugas/3" },
 ]);
 
-watch(route, () => {
-  tab.value = route.path;
+// Watch for route changes and update activeTab
+watch(() => route.path, (newPath) => {
+  // Find the matching base route
+  const matchingItem = items.value.find(item => 
+    newPath.startsWith(item.route) && item.route !== '/'
+  );
+  
+  activeTab.value = matchingItem ? matchingItem.route : newPath;
 });
 </script>
 
 <style scoped>
-/* Warna tab saat tidak aktif */
 .v-tab {
   color: #515e5c !important;
   transition: color 0.3s ease;
 }
 
-/* Warna tab saat aktif */
-.active-tab {
+.v-tabs .v-tab--selected {
   color: white !important;
+}
+
+.navbar:hover {
+  color: #fff;
 }
 
 .navbar-border {

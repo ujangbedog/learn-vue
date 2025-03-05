@@ -6,17 +6,26 @@ import Navbar from "./components/Navbar.vue";
 <template>
   <v-app class="app-background">
     <Navbar />
-    <v-container>
-      <RouterView />
-    </v-container>
+    <v-main>
+      <v-container fluid>
+        <RouterView />
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
 <style scoped>
-/* Mengatur background agar berwarna #010100 */
 .app-background {
   background-color: #010100 !important;
-  min-height: 100vh; /* Pastikan background menutupi seluruh layar */
+  min-height: 100vh;
   color: #edecec;
+}
+
+.v-main {
+  padding-top: 64px !important;
+}
+
+.v-container.fluid {
+  padding: 0 !important;
 }
 </style>

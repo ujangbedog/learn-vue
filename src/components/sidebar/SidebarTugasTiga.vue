@@ -1,69 +1,76 @@
 <template>
-  <v-row>
-  <!-- Sidebar Praktikum -->
-      <v-col cols="12" md="3">
-      <v-card class="sidebar-card">
+  <v-col cols="12" md="3">
+    <v-card class="sidebar-card">
       <v-list class="transparent-list">
-          <v-list-item-title class="text-h6 text-white text-center my-4">
+        <v-list-item-title class="text-h6 text-white text-center my-4">
           Praktikum Tugas 3
-          </v-list-item-title>
-          <v-divider class="border-gray"></v-divider>
-          <v-list-item 
-          v-for="item in praktikumList" 
-          :key="item.text" 
+        </v-list-item-title>
+        <v-divider class="border-gray"></v-divider>
+        <v-list-item
+          v-for="item in praktikumList"
+          :key="item.text"
           class="transparent-list-item"
+          :class="{ 'active-menu-item': isActive(item.route) }"
           link
-          >
+          @click="navigateTo(item.route)"
+        >
           <v-list-item-title class="text-white">
-              {{ item.text }}
+            {{ item.text }}
           </v-list-item-title>
-          </v-list-item>
+        </v-list-item>
       </v-list>
-      </v-card>
+    </v-card>
   </v-col>
-
-  <!-- Konten Utama -->
-  <v-col cols="12" md="9">
-      <v-card class="content-card">
-      <h3 class="text-h4 font-weight-bold text-white">Tugas 3</h3>
-      <p class="text-white">Ini adalah konten utama untuk Tugas 3.</p>
-      </v-card>
-  </v-col>
-  </v-row>
+  
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
 
 const praktikumList = ref([
-  { text: "Praktikum 3A" },
-  { text: "Praktikum 3B" },
-  { text: "Praktikum 3C" },
+  { text: "Praktikum 3A", route: "/tugas/3/praktikum-satu" },
+  { text: "Praktikum 3B", route: "/tugas/3/praktikum-dua" },
+  { text: "Praktikum 3C", route: "/tugas/3/praktikum-tiga" },
 ]);
+
+const navigateTo = (route) => {
+  router.push(route);
+};
+
+const isActive = (menuRoute) => {
+  return route.path === menuRoute;
+};
 </script>
 
 <style scoped>
-/* Sidebar dan Konten Transparan */
-.sidebar-card, .content-card {
-  background-color: rgba(26, 26, 26, 0.5) !important; /* Transparan */
-  border: 1px solid #2b2a2b; /* Border abu-abu */
+.sidebar-card {
+  background-color: rgba(26, 26, 26, 0.5) !important;
+  border: 1px solid #2b2a2b;
   padding: 16px;
 }
 
-/* Menghapus background putih bawaan Vuetify */
 .transparent-list {
   background: transparent !important;
 }
+
 .transparent-list-item {
   background: transparent !important;
+  transition: background-color 0.3s ease;
 }
 
-/* Divider Warna Abu-Abu */
+.active-menu-item {
+  background-color: rgba(81, 94, 92, 0.3) !important;
+  border-radius: 4px;
+}
+
 .border-gray {
   border-color: #515151 !important;
 }
 
-/* Warna teks putih */
 .text-white {
   color: #ffffff !important;
 }
