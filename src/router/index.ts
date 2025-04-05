@@ -8,9 +8,11 @@ import PraktikumTigaTS from "@/views/tugas/1/latihan.vue";
 
 //TUGAS DUA (TD)
 import TugasDua from "@/views/tugas/TugasDua.vue";
-import PraktikumSatuTD from "@/views/tugas/2/praktikum-satu.vue";
-import PraktikumDuaTD from "@/views/tugas/2/praktikum-dua.vue";
-import PraktikumTigaTD from "@/views/tugas/2/praktikum-tiga.vue";
+import PraktikumSatuTD from "@/views/tugas/2/create.vue";
+import PraktikumDuaTD from "@/views/tugas/2/mount.vue";
+import PraktikumTigaTD from "@/views/tugas/2/update.vue";
+import PraktikumEmpatTD from "@/views/tugas/2/destroy.vue";
+import PraktikumLimaTD from "@/views/tugas/2/latihan.vue";
 
 //TUGAS TIGA (TT)
 import TugasTiga from "@/views/tugas/TugasTiga.vue";
@@ -60,19 +62,29 @@ const router = createRouter({
           component: TugasDua,
           children: [
             {
-              path: "praktikum-satu",
+              path: "create",
               name: "tugas2-praktikum-satu",
               component: PraktikumSatuTD,
             },
             {
-              path: "praktikum-dua",
+              path: "mount",
               name: "tugas2-praktikum-dua",
               component: PraktikumDuaTD,
             },
             {
-              path: "praktikum-tiga",
+              path: "update",
               name: "tugas2-praktikum-tiga",
               component: PraktikumTigaTD,
+            },
+            {
+              path: "destroy",
+              name: "tugas2-praktikum-empat",
+              component: PraktikumEmpatTD,
+            },
+            {
+              path: "latihan",
+              name: "tugas2-praktikum-lima",
+              component: PraktikumLimaTD,
             },
           ],
         },

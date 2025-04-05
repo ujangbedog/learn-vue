@@ -1,14 +1,29 @@
 <template>
   <v-col cols="12" md="9">
     <v-card class="content-card d-flex flex-column align-center justify-center">
-      <h3 class="text-h4 font-weight-bold text-white text-center">Praktikum 2C</h3>
-      <p class="text-white text-center">Ini adalah konten utama untuk Praktikum 2C.</p>
+      <h3 ref="heading" class="text-h4 font-weight-bold text-white text-center">{{ message }}</h3>
     </v-card>
   </v-col>
 </template>
 
 <script setup>
-// Script untuk Praktikum 1A
+
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      message: "Mount"
+    }
+  },
+  beforeMount() {
+    console.log("beforeMount: ", this.$refs.heading?.textContent) 
+  },
+  mounted() {
+    console.log("mounted: ", this.$refs.heading?.textContent)
+  }
+}
 </script>
 
 <style scoped>

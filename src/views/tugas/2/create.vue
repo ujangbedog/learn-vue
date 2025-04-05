@@ -1,14 +1,29 @@
 <template>
   <v-col cols="12" md="9">
     <v-card class="content-card d-flex flex-column align-center justify-center">
-      <h3 class="text-h4 font-weight-bold text-white text-center">Praktikum 2A</h3>
-      <p class="text-white text-center">Ini adalah konten utama untuk Praktikum 2A.</p>
+      <h3 class="text-h4 font-weight-bold text-white text-center">{{ message }}</h3>
     </v-card>
   </v-col>
 </template>
 
 <script setup>
-// Script untuk Praktikum 1A
+//
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      message: "Create"
+    }
+  },
+  beforeCreate() {
+    console.log("beforeCreate: message =", this.message) // undefined
+  },
+  created() {
+    console.log("created: message =", this.message) // Hello world!
+  },
+}
 </script>
 
 <style scoped>

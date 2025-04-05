@@ -1,14 +1,25 @@
 <template>
   <v-col cols="12" md="9">
     <v-card class="content-card d-flex flex-column align-center justify-center">
-      <h3 class="text-h4 font-weight-bold text-white text-center">Praktikum 2B</h3>
-      <p class="text-white text-center">Ini adalah konten utama untuk Praktikum 2B.</p>
+      <h3 ref="heading" class="text-h4 font-weight-bold text-white text-center">{{ message }}</h3>
     </v-card>
   </v-col>
 </template>
 
-<script setup>
-// Script untuk Praktikum 1A
+<script>
+export default {
+  data() {
+    return {
+      message: "Destroy"
+    }
+  },
+  beforeUnmount() {
+    console.log("before destroy")
+  },
+  unmounted() {
+    console.log("destroyed")
+  },
+}
 </script>
 
 <style scoped>
