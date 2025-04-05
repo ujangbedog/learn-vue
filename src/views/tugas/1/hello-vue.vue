@@ -1,14 +1,23 @@
 <template>
   <v-col cols="12" md="9">
     <v-card class="content-card d-flex flex-column align-center justify-center">
-      <h3 class="text-h4 font-weight-bold text-white text-center">Praktikum 1B</h3>
-      <p class="text-white text-center">Ini adalah konten utama untuk Praktikum 1B.</p>
+      <h3 class="text-h4 font-weight-bold text-white text-center">{{ message }}</h3>
+      <br>
+      <p class="text-white text-center">
+  Untuk mengubah isi pesan lewat console, gunakan <br>
+  <code>message.value = "teks baru"</code><br>
+</p>
+
     </v-card>
   </v-col>
 </template>
 
 <script setup>
-// Script untuk Praktikum 1A
+import { ref } from 'vue'
+
+const message = ref("Hello World!")
+
+window.message = message
 </script>
 
 <style scoped>

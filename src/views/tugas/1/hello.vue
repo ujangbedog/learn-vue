@@ -1,14 +1,13 @@
 <template>
   <v-col cols="12" md="9">
     <v-card class="content-card d-flex flex-column align-center justify-center">
-      <h3 class="text-h4 font-weight-bold text-white text-center">Praktikum 1A</h3>
-      <p class="text-white text-center">Ini adalah konten utama untuk Praktikum 1A.</p>
+      <h3 class="text-h4 font-weight-bold text-white text-center">Hello World</h3>
     </v-card>
   </v-col>
 </template>
 
 <script setup>
-// Script untuk Praktikum 1A
+
 </script>
 
 <style scoped>

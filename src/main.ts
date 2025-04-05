@@ -25,6 +25,7 @@ import {
   VListItemTitle,
   VNavigationDrawer,
   VDivider,
+  VProgressCircular,
 } from "vuetify/components";
 import * as directives from "vuetify/directives";
 
@@ -45,6 +46,7 @@ const vuetify = createVuetify({
     VListItemTitle,
     VNavigationDrawer,
     VDivider,
+    VProgressCircular,
   },
   directives,
 });

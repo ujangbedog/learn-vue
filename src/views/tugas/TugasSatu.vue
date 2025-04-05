@@ -7,16 +7,16 @@
         :praktikumNumber="1"
         :praktikumList="[
           { 
-            name: 'Praktikum Satu', 
-            route: '/tugas/1/praktikum-satu' 
+            name: 'Hello', 
+            route: '/tugas/1/hello' 
           },
           { 
-            name: 'Praktikum Dua', 
-            route: '/tugas/1/praktikum-dua' 
+            name: 'Hello Vue', 
+            route: '/tugas/1/hello-vue' 
           },
           { 
-            name: 'Praktikum Tiga', 
-            route: '/tugas/1/praktikum-tiga' 
+            name: 'Latihan', 
+            route: '/tugas/1/latihan' 
           }
         ]"
       />

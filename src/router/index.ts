@@ -2,9 +2,9 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 //TUGAS SATU (TS)
 import TugasSatu from "../views/tugas/TugasSatu.vue";
-import PraktikumSatuTS from "@/views/tugas/1/praktikum-satu.vue";
-import PraktikumDuaTS from "@/views/tugas/1/praktikum-dua.vue";
-import PraktikumTigaTS from "@/views/tugas/1/praktikum-tiga.vue";
+import PraktikumSatuTS from "@/views/tugas/1/hello.vue";
+import PraktikumDuaTS from "@/views/tugas/1/hello-vue.vue";
+import PraktikumTigaTS from "@/views/tugas/1/latihan.vue";
 
 //TUGAS DUA (TD)
 import TugasDua from "@/views/tugas/TugasDua.vue";
@@ -38,17 +38,17 @@ const router = createRouter({
           component: TugasSatu,
           children: [
             {
-              path: "praktikum-satu",
+              path: "hello",
               name: "tugas1-praktikum-satu",
               component: PraktikumSatuTS,
             },
             {
-              path: "praktikum-dua",
+              path: "hello-vue",
               name: "tugas1-praktikum-dua",
               component: PraktikumDuaTS,
             },
             {
-              path: "praktikum-tiga",
+              path: "latihan",
               name: "tugas1-praktikum-tiga",
               component: PraktikumTigaTS,
             },
