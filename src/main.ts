@@ -5,51 +5,7 @@ import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
-
-// Vuetify
-import "vuetify/styles";
-import { createVuetify } from "vuetify";
-import {
-  VApp,
-  VAppBar,
-  VTabs,
-  VTab,
-  VContainer,
-  VRow,
-  VCol,
-  VBtn,
-  VCard,
-  VCardTitle,
-  VList,
-  VListItem,
-  VListItemTitle,
-  VNavigationDrawer,
-  VDivider,
-  VProgressCircular,
-} from "vuetify/components";
-import * as directives from "vuetify/directives";
-
-const vuetify = createVuetify({
-  components: {
-    VApp,
-    VAppBar,
-    VTabs,
-    VTab,
-    VContainer,
-    VRow,
-    VCol,
-    VBtn,
-    VCard,
-    VCardTitle,
-    VList,
-    VListItem,
-    VListItemTitle,
-    VNavigationDrawer,
-    VDivider,
-    VProgressCircular,
-  },
-  directives,
-});
+import vuetify from "./plugins/vuetify";
 
 const app = createApp(App);
 

@@ -21,11 +21,4 @@ import Navbar from "./components/Navbar.vue";
   color: #edecec;
 }
 
-.v-main {
-  padding-top: 64px !important;
-}
-
-.v-container.fluid {
-  padding: 0 !important;
-}
 </style>
