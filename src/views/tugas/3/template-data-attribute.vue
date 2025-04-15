@@ -1,13 +1,18 @@
 <template>
   <v-col cols="12" md="9">
     <v-card class="content-card d-flex flex-column align-center justify-center">
-      <h3 class="text-h4 font-weight-bold text-white text-center">Template - Data Attribute</h3>
+      <h3 :class="classH1" class="text-h4 font-weight-bold text-center">
+        {{ message }}
+      </h3>
     </v-card>
   </v-col>
 </template>
 
 <script setup>
-// Script untuk Praktikum 1A
+import { ref } from 'vue'
+
+const message = ref('Hello World!')
+const classH1 = ref('title')
 </script>
 
 <style scoped>
@@ -19,6 +24,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.title {
+  color: green;
 }
 
 .text-white {
