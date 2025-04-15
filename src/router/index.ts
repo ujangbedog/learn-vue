@@ -16,9 +16,17 @@ import PraktikumLimaTD from "@/views/tugas/2/latihan.vue";
 
 //TUGAS TIGA (TT)
 import TugasTiga from "@/views/tugas/TugasTiga.vue";
-import PraktikumSatuTT from "@/views/tugas/3/praktikum-satu.vue";
-import PraktikumDuaTT from "@/views/tugas/3/praktikum-dua.vue";
-import PraktikumTigaTT from "@/views/tugas/3/praktikum-tiga.vue";
+import PraktikumSatuTT from "@/views/tugas/3/template-data-raw.vue";
+import PraktikumDuaTT from "@/views/tugas/3/template-data-attribute.vue";
+import PraktikumTigaTT from "@/views/tugas/3/properti-template.vue";
+import PraktikumEmpatTT from "@/views/tugas/3/properti-methods.vue";
+import PraktikumLimaTT from "@/views/tugas/3/properti-computed.vue";
+import PraktikumEnamTT from "@/views/tugas/3/properti-filters.vue";
+import PraktikumTujuhTT from "@/views/tugas/3/latihan-template.vue";
+import PraktikumDelapanTT from "@/views/tugas/3/latihan-calculator.vue";
+
+//TUGAS EMPAT (TE)
+import TugasEmpat from "@/views/tugas/TugasEmpat.vue";
 
 import NotFoundView from "../views/NotFoundView.vue";
 
@@ -94,19 +102,61 @@ const router = createRouter({
           component: TugasTiga,
           children: [
             {
-              path: "praktikum-satu",
+              path: "template-data-raw",
               name: "tugas3-praktikum-satu",
               component: PraktikumSatuTT,
             },
             {
-              path: "praktikum-dua",
+              path: "template-data-attribute",
               name: "tugas3-praktikum-dua",
               component: PraktikumDuaTT,
             },
             {
-              path: "praktikum-tiga",
+              path: "properti-template",
               name: "tugas3-praktikum-tiga",
               component: PraktikumTigaTT,
+            },
+            {
+              path: "properti-methods",
+              name: "tugas3-praktikum-empat",
+              component: PraktikumEmpatTT,
+            },
+            {
+              path: "properti-computed",
+              name: "tugas3-praktikum-lima",
+              component: PraktikumLimaTT,
+            },
+            {
+              path: "properti-filters",
+              name: "tugas3-praktikum-enam",
+              component: PraktikumEnamTT,
+            },
+            {
+              path: "latihan-template",
+              name: "tugas3-praktikum-tujuh",
+              component: PraktikumTujuhTT,
+            },
+            {
+              path: "latihan-kalkulator",
+              name: "tugas3-praktikum-delapan",
+              component: PraktikumDelapanTT,
+            },
+          ],
+        },
+        {
+          path: "4",
+          name: "tugas4",
+          component: TugasEmpat,
+          children: [
+            {
+              path: "create",
+              name: "tugas4-praktikum-satu",
+              component: PraktikumSatuTD,
+            },
+            {
+              path: "latihan",
+              name: "tugas4-praktikum-lima",
+              component: PraktikumLimaTD,
             },
           ],
         },
