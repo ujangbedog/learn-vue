@@ -7,17 +7,37 @@
         :praktikumNumber="3"
         :praktikumList="[
           { 
-            name: 'Praktikum Satu', 
-            route: '/tugas/3/praktikum-satu' 
+            name: 'Template - Data Raw', 
+            route: '/tugas/3/template-data-raw' 
           },
           { 
-            name: 'Praktikum Dua', 
-            route: '/tugas/3/praktikum-dua' 
+            name: 'Template - Data Attribute', 
+            route: '/tugas/3/template-data-attribute' 
           },
           { 
-            name: 'Praktikum Tiga', 
-            route: '/tugas/3/praktikum-tiga' 
-          }
+            name: 'Properti Template', 
+            route: '/tugas/3/properti-template' 
+          },
+          { 
+            name: 'Properti Methods', 
+            route: '/tugas/3/properti-methods' 
+          },
+          { 
+            name: 'Properti Computed', 
+            route: '/tugas/3/properti-computed' 
+          },
+          { 
+            name: 'Properti Filters', 
+            route: '/tugas/3/properti-filters' 
+          },
+          { 
+            name: 'Latihan - Template', 
+            route: '/tugas/3/latihan-template' 
+          },
+          { 
+            name: 'Latihan - Kalkulator', 
+            route: '/tugas/3/latihan-kalkulator' 
+          },
         ]"
       />
 
