@@ -2,15 +2,6 @@
   <v-col cols="12" md="9">
     <v-card class="content-card d-flex flex-column align-center justify-center">
       <h3 class="text-h4 font-weight-bold text-white text-center">Directive v-if</h3>
-      <v-text-field 
-        v-model="nilai" 
-        label="Masukkan Nilai (A, B, C, D)" 
-        outlined 
-        clearable
-        class="my-4"
-        style="border: 1px solid #2b2a2b;"
-      />
-
       <div v-if="nilai === 'A'">
         <p class="text-white">Sempurna</p>
       </div>

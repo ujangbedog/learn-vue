@@ -1,7 +1,7 @@
 <template>
   <v-col cols="12" md="9">
     <v-card class="content-card d-flex flex-column align-center justify-center">
-      <h3 class="text-h4 font-weight-bold text-white text-center">Directive v-bind</h3>
+      <h3 class="text-h4 font-weight-bold text-white text-center mb-4">Directive v-bind</h3>
       
       <img :src="imageSrc" width="300" alt="Gambar Kucing">
     </v-card>
