@@ -7,36 +7,36 @@
           :praktikumNumber="4"
           :praktikumList="[
             { 
-              name: 'Template - Data Raw', 
-              route: '/tugas/3/template-data-raw' 
+              name: 'Directive | v-if', 
+              route: '/tugas/4/directive-v-if' 
             },
             { 
-              name: 'Template - Data Attribute', 
-              route: '/tugas/3/template-data-attribute' 
+              name: 'Directive | v-on', 
+              route: '/tugas/4/directive-v-on' 
             },
             { 
-              name: 'Properti Template', 
-              route: '/tugas/3/properti-template' 
+              name: 'Directive | v-bind', 
+              route: '/tugas/4/directive-v-bind' 
             },
             { 
-              name: 'Properti Methods', 
-              route: '/tugas/3/properti-methods' 
+              name: 'List | Data Array', 
+              route: '/tugas/4/list-data-array' 
             },
             { 
-              name: 'Properti Computed', 
-              route: '/tugas/3/properti-computed' 
+              name: 'List | v-for tag template', 
+              route: '/tugas/4/list-v-for-tag-template' 
             },
             { 
-              name: 'Properti Filters', 
-              route: '/tugas/3/properti-filters' 
+              name: 'List | v-for index', 
+              route: '/tugas/4/list-v-for-index' 
             },
             { 
-              name: 'Latihan - Template', 
-              route: '/tugas/3/latihan-template' 
+              name: 'List | data object', 
+              route: '/tugas/4/list-data-object' 
             },
             { 
-              name: 'Latihan - Kalkulator', 
-              route: '/tugas/3/latihan-kalkulator' 
+              name: 'Latihan - Directive', 
+              route: '/tugas/4/latihan-directive' 
             },
           ]"
         />

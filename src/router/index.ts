@@ -27,6 +27,14 @@ import PraktikumDelapanTT from "@/views/tugas/3/latihan-calculator.vue";
 
 //TUGAS EMPAT (TE)
 import TugasEmpat from "@/views/tugas/TugasEmpat.vue";
+import PraktikumSatuTE from "@/views/tugas/4/directive-v-if.vue";
+import PraktikumDuaTE from "@/views/tugas/4/directive-v-on.vue";
+import PraktikumTigaTE from "@/views/tugas/4/directive-v-bind.vue";
+import PraktikumEmpatTE from "@/views/tugas/4/list-data-array.vue";
+import PraktikumLimaTE from "@/views/tugas/4/list-v-for-tag-template.vue";
+import PraktikumEnamTE from "@/views/tugas/4/list-v-for-index.vue";
+import PraktikumTujuhTE from "@/views/tugas/4/list-data-object.vue";
+import PraktikumDelapanTE from "@/views/tugas/4/latihan-directive.vue";
 
 import NotFoundView from "../views/NotFoundView.vue";
 
@@ -149,14 +157,44 @@ const router = createRouter({
           component: TugasEmpat,
           children: [
             {
-              path: "create",
+              path: "directive-v-if",
               name: "tugas4-praktikum-satu",
-              component: PraktikumSatuTD,
+              component: PraktikumSatuTE,
             },
             {
-              path: "latihan",
+              path: "directive-v-on",
+              name: "tugas4-praktikum-dua",
+              component: PraktikumDuaTE,
+            },
+            {
+              path: "directive-v-bind",
+              name: "tugas4-praktikum-tiga",
+              component: PraktikumTigaTE,
+            },
+            {
+              path: "list-data-array",
+              name: "tugas4-praktikum-empat",
+              component: PraktikumEmpatTE,
+            },
+            {
+              path: "list-v-for-tag-template",
               name: "tugas4-praktikum-lima",
-              component: PraktikumLimaTD,
+              component: PraktikumLimaTE,
+            },
+            {
+              path: "list-v-for-index",
+              name: "tugas4-praktikum-enam",
+              component: PraktikumEnamTE,
+            },
+            {
+              path: "list-data-object",
+              name: "tugas4-praktikum-tujuh",
+              component: PraktikumTujuhTE,
+            },
+            {
+              path: "latihan-directive",
+              name: "tugas4-praktikum-delapan",
+              component: PraktikumDelapanTE,
             },
           ],
         },
