@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>LEARN VUE JS</title>
+    <script src="/lib/vue3.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        background-color: #1a1a1a;
+        color: white;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .content-card {
+        background-color: rgba(26, 26, 26, 0.5);
+        border: 1px solid #2b2a2b;
+        padding: 2rem;
+        width: 90%;
+        max-width: 800px;
+        text-align: center;
+        border-radius: 10px;
+      }
+
+      .button {
+        margin: 0 10px;
+        padding: 10px 20px;
+        border: none;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .btn-primary {
+        background-color: #1976d2;
+      }
+
+      .btn-error {
+        background-color: #d32f2f;
+      }
+
+      .loader {
+        border: 4px solid #1f1f1f;
+        border-top: 4px solid white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      ul {
+        text-align: left;
+        max-height: 200px;
+        overflow-y: auto;
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="content-card">
+        <h3 style="font-size: 24px; font-weight: bold">{{ message }}</h3>
+
+        <div v-if="isLoading">
+          <div class="loader"></div>
+          <p>Loading...</p>
+        </div>
+
+        <div v-else>
+          <p>Counter: {{ counter }}</p>
+          <button class="button btn-primary" @click="incrementCounter">
+            Increment Counter
+          </button>
+          <button class="button btn-error" @click="triggerUnmount">
+            Destroy Component
+          </button>
+
+          <div style="margin-top: 30px; text-align: left">
+            <h4>Lifecycle Events:</h4>
+            <ul>
+              <li v-for="(event, index) in lifecycleEvents" :key="index">
+                {{ event }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const {
+        createApp,
+        ref,
+        onMounted,
+        onBeforeMount,
+        onUpdated,
+        onBeforeUpdate,
+        onUnmounted,
+        onBeforeUnmount,
+        onActivated,
+        onDeactivated,
+      } = Vue;
+
+      createApp({
+        setup() {
+          const message = ref("Latihan Lifecycle");
+          const counter = ref(0);
+          const isLoading = ref(true);
+          const lifecycleEvents = ref([]);
+          const isComponentMounted = ref(false);
+
+          const logLifecycleEvent = (event) => {
+            const timestamp = new Date().toLocaleTimeString();
+            lifecycleEvents.value.push(`${timestamp}: ${event}`);
+            console.log(`${timestamp}: ${event}`);
+          };
+
+          logLifecycleEvent(
+            "Setup function started (like beforeCreate/created)"
+          );
+
+          const incrementCounter = () => {
+            counter.value++;
+          };
+
+          const triggerUnmount = () => {
+            isComponentMounted.value = false;
+            message.value = "Component will be destroyed!";
+          };
+
+          onBeforeMount(() => {
+            logLifecycleEvent(
+              "onBeforeMount: Component is about to be mounted"
+            );
+          });
+
+          onMounted(() => {
+            logLifecycleEvent("onMounted: Component is mounted to the DOM");
+            setTimeout(() => {
+              isLoading.value = false;
+              logLifecycleEvent("Initial data loaded");
+            }, 2000);
+            isComponentMounted.value = true;
+          });
+
+          onBeforeUpdate(() => {
+            if (isComponentMounted.value) {
+              logLifecycleEvent("onBeforeUpdate: Component is about to update");
+            }
+          });
+
+          onUpdated(() => {
+            if (isComponentMounted.value) {
+              logLifecycleEvent("onUpdated: Component was updated");
+            }
+          });
+
+          onBeforeUnmount(() => {
+            logLifecycleEvent(
+              "onBeforeUnmount: Component is about to be unmounted"
+            );
+          });
+
+          onUnmounted(() => {
+            logLifecycleEvent(
+              "onUnmounted: Component is unmounted from the DOM"
+            );
+          });
+
+          onActivated(() => {
+            logLifecycleEvent("onActivated: Kept-alive component is activated");
+          });
+
+          onDeactivated(() => {
+            logLifecycleEvent(
+              "onDeactivated: Kept-alive component is deactivated"
+            );
+          });
+
+          return {
+            message,
+            counter,
+            isLoading,
+            lifecycleEvents,
+            incrementCounter,
+            triggerUnmount,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

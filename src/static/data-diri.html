@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LEARN VUE JS</title>
+  <script src="/lib/vue3.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .content-wrapper {
+      padding: 1rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .content-card {
+      background-color: rgba(26, 26, 26, 0.5);
+      border: 1px solid #2b2a2b;
+      padding: 40px 24px;
+      min-height: 300px;
+      width: 100%;
+      max-width: 500px;
+      color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      text-align: center;
+    }
+
+    .text-h4 {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .text-body-1 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      .content-card {
+        padding: 30px 16px;
+      }
+
+      .text-h4 {
+        font-size: 1.5rem;
+      }
+
+      .text-body-1 {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="content-wrapper">
+    <div class="content-card">
+      <h3 class="text-h4">Data Diri</h3>
+      <p class="text-body-1"><strong>Nama:</strong> {{ nama }}</p>
+      <p class="text-body-1"><strong>Prodi:</strong> {{ prodi }}</p>
+      <p class="text-body-1"><strong>Tahun Angkatan:</strong> {{ angkatan }}</p>
+      <p class="text-body-1"><strong>Email:</strong> {{ email }}</p>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+
+    const app = createApp({
+      setup() {
+        const nama = ref('Ilham Alfath');
+        const prodi = ref('Teknik Informatika');
+        const angkatan = ref(2019);
+        const email = ref('ilham28alfath@gmail.com');
+
+        // Biar bisa diubah lewat console
+        window.nama = nama;
+        window.prodi = prodi;
+        window.angkatan = angkatan;
+        window.email = email;
+
+        return {
+          nama,
+          prodi,
+          angkatan,
+          email
+        };
+      }
+    });
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
