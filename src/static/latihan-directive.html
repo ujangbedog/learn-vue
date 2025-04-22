@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simple TODO Vue</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      background-color: #121212;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .card {
+      background-color: rgba(26, 26, 26, 0.5);
+      border: 1px solid #2b2a2b;
+      padding: 32px;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 8px;
+    }
+
+    .text-white {
+      color: white;
+    }
+
+    .input-wrapper {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .todo-input {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #2b2a2b;
+      background: transparent;
+      color: white;
+      border-radius: 4px;
+    }
+
+    .add-button {
+      padding: 10px 16px;
+      border: 1px solid #2b2a2b;
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .add-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .todo-list {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 16px;
+    }
+
+    .todo-list li {
+      padding: 10px;
+      margin-bottom: 8px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .todo-list li.done {
+      text-decoration: line-through;
+      color: #aaa;
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .delete {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="card">
+      <h3 class="text-white text-center">Simple TODO</h3>
+
+      <div class="input-wrapper">
+        <input
+          v-model="newTodo"
+          @keyup.enter="addTodo"
+          placeholder="Tambahkan todo baru"
+          class="todo-input"
+        />
+        <button @click="addTodo" class="add-button">Tambah</button>
+      </div>
+
+      <p v-if="todos.length === 0" class="text-white">todo tidak ada.</p>
+
+      <ul class="todo-list">
+        <li
+          v-for="(todo, index) in todos"
+          :key="index"
+          :class="{ done: todo.done }"
+          @click="toggleTodo(index)"
+        >
+          <span class="text-white">{{ index + 1 }}. {{ todo.text }}</span>
+          <span class="delete text-white" @click.stop="deleteTodo(index)">❌</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue
+
+    createApp({
+      setup() {
+        const newTodo = ref('')
+        const todos = ref([])
+
+        const addTodo = () => {
+          if (newTodo.value.trim()) {
+            todos.value.push({ text: newTodo.value.trim(), done: false })
+            newTodo.value = ''
+          }
+        }
+
+        const deleteTodo = (index) => {
+          todos.value.splice(index, 1)
+        }
+
+        const toggleTodo = (index) => {
+          todos.value[index].done = !todos.value[index].done
+        }
+
+        return {
+          newTodo,
+          todos,
+          addTodo,
+          deleteTodo,
+          toggleTodo
+        }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
