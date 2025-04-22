@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LEARN VUE JS</title>
+  <script src="/lib/vue3.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #121212;
+      font-family: sans-serif;
+      color: white;
+    }
+    .content-card {
+      background-color: rgba(26, 26, 26, 0.5);
+      border: 1px solid #2b2a2b;
+      padding: 32px;
+      min-height: 350px;
+      max-width: 300px;
+      margin: 50px auto;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .input-box {
+      width: 240px;
+      padding: 10px 14px;
+      background: transparent;
+      color: white;
+      border: 1px solid #2b2a2b;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      margin-bottom: 16px;
+    }
+    .input-box::placeholder {
+      color: #aaa;
+    }
+    .btn {
+      background: transparent;
+      color: white;
+      border: 1px solid #2b2a2b;
+      padding: 8px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 20px;
+      transition: all 0.2s ease;
+      margin: 0 8px;
+    }
+    .btn:hover {
+      background-color: #2b2a2b;
+    }
+    .btn-reset {
+      font-size: 16px;
+      padding: 6px 16px;
+      margin-top: 20px;
+    }
+    .button-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .result {
+      font-size: 22px;
+      margin-top: 16px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+  const { createApp, ref } = Vue
+
+  createApp({
+    setup() {
+      const nilai1 = ref(0)
+      const nilai2 = ref(0)
+      const hasil = ref(null)
+
+      function hitung(operasi) {
+        switch (operasi) {
+          case 'tambah':
+            hasil.value = nilai1.value + nilai2.value
+            break
+          case 'kurang':
+            hasil.value = nilai1.value - nilai2.value
+            break
+          case 'kali':
+            hasil.value = nilai1.value * nilai2.value
+            break
+          case 'bagi':
+            hasil.value = nilai2.value !== 0 ? (nilai1.value / nilai2.value).toFixed(2) : '∞'
+            break
+        }
+      }
+
+      function reset() {
+        nilai1.value = 0
+        nilai2.value = 0
+        hasil.value = null
+      }
+
+      return {
+        nilai1,
+        nilai2,
+        hasil,
+        hitung,
+        reset
+      }
+    },
+    template: `
+      <div class="content-card">
+        <h3 class="title">Latihan Kalkulator</h3>
+        <input v-model.number="nilai1" type="number" placeholder="Masukkan Nilai 1" class="input-box" />
+        <input v-model.number="nilai2" type="number" placeholder="Masukkan Nilai 2" class="input-box" />
+
+        <div class="button-group">
+          <button @click="hitung('tambah')" class="btn">+</button>
+          <button @click="hitung('kurang')" class="btn">−</button>
+          <button @click="hitung('kali')" class="btn">×</button>
+          <button @click="hitung('bagi')" class="btn">÷</button>
+        </div>
+
+        <button @click="reset" class="btn btn-reset">Hapus</button>
+
+        <p class="result">Hasil: {{ hasil !== null ? hasil : '-' }}</p>
+      </div>
+    `
+  }).mount('#app')
+</script>
+
+</body>
+</html>

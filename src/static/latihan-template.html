@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LEARN VUE JS</title>
+  <script src="/lib/vue3.js"></script>
+  <style>
+    .content-card {
+      background-color: #1a1a1a;
+      border: 1px solid #333;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      margin: 50px auto;
+      color: white;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body style="background-color: #121212;">
+
+<div id="app"></div>
+
+<script>
+  const { createApp, ref } = Vue;
+
+  createApp({
+    data() {
+      return {
+        message: 'Selamat Datang di Vue 3!',
+        firstName: 'Ilham',
+        lastName: 'Alfath',
+        tooltip: 'Ini adalah nama lengkap saya',
+        textColor: '#00ffcc',
+        fontSize: 20
+      }
+    },
+    template: `
+      <div class="content-card">
+        <h3 style="text-align: center;">{{ message }}</h3>
+        <p :title="tooltip"
+           :style="{ color: textColor, fontSize: fontSize + 'px' }"
+           style="text-align: center;">
+           Nama: {{ firstName }} {{ lastName }}
+        </p>
+      </div>
+    `
+  }).mount('#app');
+</script>
+
+</body>
+</html>
