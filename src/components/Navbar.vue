@@ -38,6 +38,7 @@ const items = ref([
   { text: "Tugas 3", route: "/tugas/3" },
   { text: "Tugas 4", route: "/tugas/4" },
   { text: "Tugas 5", route: "/tugas/5" },
+  { text: "Tugas 6", route: "/tugas/6" },
 ]);
 
 // Watch for route changes and update activeTab
