@@ -9,7 +9,7 @@ import PraktikumEnam from "@/views/tugas/4/list-v-for-index.vue";
 import PraktikumTujuh from "@/views/tugas/4/list-data-object.vue";
 import PraktikumDelapan from "@/views/tugas/4/latihan-directive.vue";
 
-const Tugas2Routes: RouteRecordRaw = {
+const Tugas4Routes: RouteRecordRaw = {
   path: "4",
   name: "tugas4",
   component: TugasEmpat,
@@ -57,4 +57,4 @@ const Tugas2Routes: RouteRecordRaw = {
   ],
 };
 
-export default Tugas2Routes;
+export default Tugas4Routes;

@@ -9,7 +9,7 @@ import PraktikumEnam from "@/views/tugas/3/properti-filters.vue";
 import PraktikumTujuh from "@/views/tugas/3/latihan-template.vue";
 import PraktikumDelapan from "@/views/tugas/3/latihan-calculator.vue";
 
-const Tugas2Routes: RouteRecordRaw = {
+const Tugas3Routes: RouteRecordRaw = {
   path: "3",
   name: "tugas3",
   component: TugasTiga,
@@ -57,4 +57,4 @@ const Tugas2Routes: RouteRecordRaw = {
   ],
 };
 
-export default Tugas2Routes;
+export default Tugas3Routes;

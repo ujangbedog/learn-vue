@@ -5,7 +5,7 @@ import PraktikumDua from "@/views/tugas/6/filtering-data-list.vue";
 import PraktikumTiga from "@/views/tugas/6/handling-submit.vue";
 import PraktikumEmpat from "@/views/tugas/6/latihan-form.vue";
 
-const Tugas2Routes: RouteRecordRaw = {
+const Tugas6Routes: RouteRecordRaw = {
   path: "6",
   name: "tugas6",
   component: TugasEnam,
@@ -33,4 +33,4 @@ const Tugas2Routes: RouteRecordRaw = {
   ],
 };
 
-export default Tugas2Routes;
+export default Tugas6Routes;
