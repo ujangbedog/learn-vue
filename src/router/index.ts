@@ -13,6 +13,7 @@ import Tugas3Routes from "./tugas-3-routes";
 import Tugas4Routes from "./tugas-4-routes";
 import Tugas5Routes from "./tugas-5-routes";
 import Tugas6Routes from "./tugas-6-routes";
+import Tugas7Routes from "./tugas-7-routes";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -30,6 +31,7 @@ const routes: RouteRecordRaw[] = [
       Tugas4Routes,
       Tugas5Routes,
       Tugas6Routes,
+      Tugas7Routes,
     ],
   },
   {
