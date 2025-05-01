@@ -4,6 +4,7 @@
       <v-card-title class="text-h4 font-weight-bold text-white text-center">
         Handling Submit
       </v-card-title>
+      
       <v-card-text>
         <form @submit.prevent="submitForm">
           <div class="title">Form Buku</div>
@@ -144,7 +145,7 @@ const clearForm = () => {
   title.value = '';
   description.value = '';
   authors.value = '';
-  price.value = 0;
+  price.value = null;
   categories.value = [];
   coverFile.value = null;
 };
@@ -170,6 +171,13 @@ const clearForm = () => {
   outline: none;
   margin-bottom: 16px;
   box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.input-box:focus,
+textarea:focus,
+select:focus {
+  border-color: white;
 }
 
 .btn {

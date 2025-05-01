@@ -17,7 +17,14 @@
             placeholder="Deskripsi"
             class="todo-input text-white"
           />
-          <button @click="addTodo" class="add-button text-white">Tambah</button>
+          
+          <button @click="addTodo" class="add-button" :disabled="isSubmitting">
+            <span v-if="isSubmitting">
+              <v-progress-circular indeterminate color="white" size="24"></v-progress-circular> 
+              Submitting...
+            </span>
+            <span v-else>Submit</span>
+          </button>
         </div>
   
         <div v-if="isLoading">
@@ -60,6 +67,7 @@
   const newDescription = ref("");
   const todos = ref([]);
   const isLoading = ref(true);
+  const isSubmitting = ref(false);
   
   const API_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, '');
   
@@ -76,6 +84,8 @@
   };
   
   const addTodo = async () => {
+    isSubmitting.value = true;
+
     if (newTodo.value.trim() && newDescription.value.trim()) {
       const newTodoData = {
         title: newTodo.value,
@@ -91,6 +101,8 @@
       } catch (error) {
         console.error("Error adding todo:", error);
       }
+
+      isSubmitting.value = false;
     }
   };
   
@@ -148,15 +160,23 @@
     background-color: transparent;
     border: 1px solid #2b2a2b;
     color: white;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
   }
   
+  .todo-input:focus{
+    border-color: white;
+  }
+
   .add-button {
     background-color: transparent;
     border: 1px solid #2b2a2b;
     padding: 8px 16px;
     cursor: pointer;
+    border-radius: 8px;
     transition: background-color 0.2s ease;
     align-self: flex-start;
+    color: #fff;
   }
   
   .add-button:hover {
