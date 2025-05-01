@@ -20,7 +20,11 @@
           <button @click="addTodo" class="add-button text-white">Tambah</button>
         </div>
   
-        <p v-if="todos.length === 0" class="text-white mt-4">todo tidak ada.</p>
+        <div v-if="isLoading">
+            <v-progress-circular indeterminate color="white"></v-progress-circular>
+        </div>
+
+        <p v-else-if="todos.length === 0" class="text-white mt-4">todo tidak ada.</p>
   
         <!-- Todo List -->
         <ul class="todo-list">
@@ -55,15 +59,19 @@
   const newTodo = ref("");
   const newDescription = ref("");
   const todos = ref([]);
+  const isLoading = ref(true);
   
   const API_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, '');
   
   const fetchTodos = async () => {
+    isLoading.value = true;
     try {
       const response = await axios.get(`${API_URL}/todos`);
       todos.value = response.data;
     } catch (error) {
       console.error("Error fetching todos:", error);
+    } finally{
+        isLoading.value = false;
     }
   };
   
