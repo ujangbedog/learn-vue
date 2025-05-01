@@ -3,26 +3,26 @@
     <v-card class="styled-card pa-4">
       <h3 class="text-h4 font-weight-bold text-white text-center mb-6">Input Binding</h3>
 
-      <label class="text-white font-weight-bold">Masukkan Judul</label>
       <v-text-field
         v-model="title"
         outlined
-        class="styled-input mb-2"
+        variant="outlined" 
+        color="white"
+        label="Judul"
       />
       <p class="text-white">Judul: {{ title }}</p>
       <hr class="divider" />
 
-      <label class="text-white font-weight-bold">Masukkan Harga</label>
       <v-text-field
         v-model.number="price"
         type="number"
-        outlined
-        class="styled-input mb-2"
+        variant="outlined" 
+        color="white"
+        label="Harga"
       />
       <p class="text-white">Harga: {{ price }}</p>
       <hr class="divider" />
 
-      <label class="text-white font-weight-bold mb-2">Pilih Paket</label>
       <v-radio-group v-model="paket" row class="styled-radio mb-2">
         <v-radio label="Buku Laravel" value="A" color="grey lighten-1" />
         <v-radio label="Buku Vue" value="B" color="grey lighten-1" />
@@ -31,15 +31,15 @@
       <p class="text-white">Pilihan Paket: {{ paket }}</p>
       <hr class="divider" />
 
-      <label class="text-white font-weight-bold">Pilih Kategori</label>
       <v-select
         v-model="category"
         :items="categoriesOptions"
         item-title="text"
         item-value="value"
-        outlined
-        class="styled-input mb-2"
-      />
+        label="Pilih Kategori"
+        variant="outlined"
+        color="white"
+      ></v-select>
       <p class="text-white">Kategori: {{ category }}</p>
       <hr class="divider" />
 
@@ -50,23 +50,22 @@
         :label="hobby"
         :value="hobby"
         v-model="hobbies"
+        class="styled-checkbox"
         color="grey lighten-1"
-        class="styled-checkbox ml-4"
         hide-details
       />
       <p class="text-white">Hobi: {{ hobbies.join(', ') }}</p>
       <hr class="divider" />
 
-      <label class="text-white font-weight-bold">Pilih Beberapa Kategori</label>
       <v-select
         v-model="selectedCategories"
         :items="categoriesOptions"
         item-title="text"
         item-value="value"
         multiple
-        chips
-        outlined
-        class="styled-input mb-2"
+        label="Pilih Kategori"
+        variant="outlined"
+        color="white"
       />
       <p class="text-white">Kategori Terpilih: {{ selectedCategories }}</p>
     </v-card>
@@ -79,9 +78,9 @@ import { ref } from 'vue'
 const title = ref('')
 const price = ref(null)
 const paket = ref('')
-const category = ref('')
+const category = ref(null)
 const hobbies = ref([])
-const selectedCategories = ref([])
+const selectedCategories = ref(null)
 
 const categoriesOptions = [
   { text: 'Belajar Matematika', value: '01' },
@@ -119,15 +118,37 @@ const hobbyOptions = ['Nonton', 'Jalan', 'Makan']
   border: 1px solid #2b2a2b;
 }
 
-.styled-checkbox >>> .v-input__control,
-.styled-radio >>> .v-input__control {
-  background-color: rgba(26, 26, 26, 0.5) !important;
-  border: 1px solid #2b2a2b;
-  border-radius: 8px;
+.styled-checkbox >>> .v-selection-control {
+  min-height: 0;
+  margin-bottom: 4px;
 }
-.styled-checkbox >>> .v-label,
-.styled-radio >>> .v-label {
+
+.styled-checkbox >>> .v-selection-control__input {
+  width: 20px;
+  height: 20px;
+  border: 2px solid white !important; /* Border putih */
+  background-color: rgba(26, 26, 26, 0.5) !important;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styled-checkbox >>> .v-selection-control--dirty .v-selection-control__input {
+  background-color: #fff !important; /* Warna saat dicentang */
+  border-color: #fff !important;
+}
+
+.styled-checkbox >>> .v-selection-control--dirty .v-selection-control__input::after {
+  content: "✓"; /* Tanda centang */
+  color: #000;
+  font-size: 14px;
+  position: absolute;
+}
+
+.styled-checkbox >>> .v-label {
   color: #ccc !important;
+  margin-left: 8px;
 }
 
 .divider {
@@ -149,7 +170,6 @@ const hobbyOptions = ['Nonton', 'Jalan', 'Makan']
   background-color: white !important;
   border: 2px solid white !important;
 }
-
 
 .styled-radio >>> input:checked ~ .v-selection-control__input::after {
   content: "";

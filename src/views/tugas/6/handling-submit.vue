@@ -7,8 +7,7 @@
       
       <v-card-text>
         <form @submit.prevent="submitForm">
-          <div class="title">Form Buku</div>
-
+          <br>
           <div v-if="errors.length">
             <b>Silakan perbaiki:</b>
             <ul>
@@ -16,38 +15,34 @@
             </ul>
           </div>
 
-          <label for="title">Title:</label>
-          <input type="text" class="input-box" v-model="title" id="title" placeholder="Judul buku" />
+          <v-text-field v-model="title" id="title" label="Judul buku" variant="outlined" color="white" />
 
-          <label for="description">Description:</label>
-          <textarea v-model="description" placeholder="Deskripsi buku"></textarea>
+          <v-textarea v-model="description" label="Deskripsi buku" variant="outlined" color="white"/>
 
-          <label for="authors">Authors:</label>
-          <input type="text" class="input-box" v-model="authors" id="authors" placeholder="Penulis" />
+          <v-text-field v-model="authors" id="authors" label="Penulis" variant="outlined" color="white" />
 
-          <label for="price">Price:</label>
-          <input type="number" class="input-box" v-model.number="price" id="price" placeholder="Harga" />
+          <v-text-field type="number" v-model.number="price" id="price" label="Harga" variant="outlined" color="white" />
 
-          <label for="categories">Categories:</label>
           <v-select
             v-model="categories"
             :items="options"
             item-title="text"
             item-value="value"
-            label="Select Categories"
+            label="Pilih Kategori"
+            variant="outlined"
+            color="white"
             multiple
           ></v-select>
 
-          <label for="cover">Cover:</label>
-          <input name="cover" ref="cover" type="file" class="input-box" id="cover" @change="handleFileChange" />
+          <v-text-field name="cover" ref="cover" type="file" id="cover" @change="handleFileChange" label="Cover" variant="outlined" color="white"/>
 
-          <button type="submit" class="btn" :disabled="isSubmitting">
+          <v-btn type="submit" class="btn" :disabled="isSubmitting">
             <span v-if="isSubmitting">
               <v-progress-circular indeterminate color="white" size="24"></v-progress-circular> 
               Submitting...
             </span>
             <span v-else>Submit</span>
-          </button>
+          </v-btn>
         </form>
         <br>
         <div v-if="submittedData">
@@ -182,14 +177,9 @@ select:focus {
 
 .btn {
   background: transparent;
-  color: white;
   border: 1px solid #2b2a2b;
-  padding: 8px 20px;
   border-radius: 8px;
-  cursor: pointer;
-  font-size: 18px;
   transition: all 0.2s ease;
-  margin-top: 10px;
 }
 
 .btn:hover {

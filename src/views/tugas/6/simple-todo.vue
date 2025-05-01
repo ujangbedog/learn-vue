@@ -3,37 +3,37 @@
       <v-card class="content-card">
         <h3 class="text-h4 font-weight-bold text-white text-center">Simple TODO</h3>
   
-        <!-- Form Input -->
         <div class="input-wrapper">
-          <input
+          <v-text-field
             v-model="newTodo"
             @keyup.enter="addTodo"
-            placeholder="Judul Todo"
-            class="todo-input text-white"
+            label="Judul Todo"
+            variant="outlined"
+            color="white"
           />
-          <input
+          <v-text-field
             v-model="newDescription"
             @keyup.enter="addTodo"
-            placeholder="Deskripsi"
-            class="todo-input text-white"
+            label="Deskripsi"
+            variant="outlined"
+            color="white"
           />
           
-          <button @click="addTodo" class="add-button" :disabled="isSubmitting">
+          <v-btn @click="addTodo" class="add-button" :disabled="isSubmitting">
             <span v-if="isSubmitting">
               <v-progress-circular indeterminate color="white" size="24"></v-progress-circular> 
               Submitting...
             </span>
             <span v-else>Submit</span>
-          </button>
+          </v-btn>
         </div>
   
         <div v-if="isLoading">
-            <v-progress-circular indeterminate color="white"></v-progress-circular>
+          <v-progress-circular indeterminate color="white"></v-progress-circular>
         </div>
-
+  
         <p v-else-if="todos.length === 0" class="text-white mt-4">todo tidak ada.</p>
   
-        <!-- Todo List -->
         <ul class="todo-list">
           <li
             v-for="(todo, index) in todos"
@@ -78,21 +78,19 @@
       todos.value = response.data;
     } catch (error) {
       console.error("Error fetching todos:", error);
-    } finally{
-        isLoading.value = false;
+    } finally {
+      isLoading.value = false;
     }
   };
   
   const addTodo = async () => {
     isSubmitting.value = true;
-
     if (newTodo.value.trim() && newDescription.value.trim()) {
       const newTodoData = {
         title: newTodo.value,
         description: newDescription.value,
         completed: false,
       };
-  
       try {
         const response = await axios.post(`${API_URL}/todos`, newTodoData);
         todos.value.push(response.data);
@@ -101,7 +99,6 @@
       } catch (error) {
         console.error("Error adding todo:", error);
       }
-
       isSubmitting.value = false;
     }
   };
@@ -153,30 +150,13 @@
     margin: 16px 0;
   }
   
-  .todo-input {
-    width: 100%;
-    padding: 8px;
-    font-size: 16px;
-    background-color: transparent;
-    border: 1px solid #2b2a2b;
-    color: white;
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
-  }
-  
-  .todo-input:focus{
-    border-color: white;
-  }
-
   .add-button {
     background-color: transparent;
     border: 1px solid #2b2a2b;
-    padding: 8px 16px;
     cursor: pointer;
     border-radius: 8px;
     transition: background-color 0.2s ease;
     align-self: flex-start;
-    color: #fff;
   }
   
   .add-button:hover {

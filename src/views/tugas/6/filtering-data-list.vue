@@ -8,11 +8,12 @@
         <v-text-field
           v-model="keyword"
           label="Ketikkan kata kunci"
-          outlined
-          class="input-field"
+          variant="outlined" 
           color="white"
           clearable
         ></v-text-field>
+        <hr />
+        <br>
         <v-list style="background-color: transparent;">
           <v-list-item-group>
             <v-list-item
@@ -49,7 +50,7 @@ const filterBooks = computed(() => {
 
 <style scoped>
 .content-card {
-  background-color: rgba(26, 26, 26, 0.8) !important;
+  background-color: rgba(26, 26, 26, 0.5) !important;
   border: 1px solid #2b2a2b;
   padding: 16px;
   border-radius: 8px;
@@ -61,7 +62,7 @@ const filterBooks = computed(() => {
 }
 
 .list-item {
-  background-color: rgba(0, 0, 0, 0.8) !important;
+  background-color: rgba(26, 26, 26, 0.8) !important;
   border: 1px solid #2b2a2b;
   border-radius: 4px; 
   margin-bottom: 8px; 
