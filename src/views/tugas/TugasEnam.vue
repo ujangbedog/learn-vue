@@ -18,6 +18,10 @@
               route: '/tugas/6/handling-submit' 
             },
             { 
+              name: 'Learn: Simple Todo', 
+              route: '/tugas/6/simple-todo' 
+            },
+            { 
               name: 'Latihan Form', 
               route: '/tugas/6/latihan-form' 
             },
