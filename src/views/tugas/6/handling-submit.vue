@@ -28,17 +28,34 @@
           <input type="number" class="input-box" v-model.number="price" id="price" placeholder="Harga" />
 
           <label for="categories">Categories:</label>
-          <select v-model="categories" multiple id="categories">
-            <option v-for="option in options" :key="option.value" :value="option.value">
-              {{ option.text }}
-            </option>
-          </select>
+          <v-select
+            v-model="categories"
+            :items="options"
+            item-title="text"
+            item-value="value"
+            label="Select Categories"
+            multiple
+          ></v-select>
 
           <label for="cover">Cover:</label>
-          <input name="cover" ref="cover" type="file" class="input-box" id="cover">
+          <input name="cover" ref="cover" type="file" class="input-box" id="cover" @change="handleFileChange" />
 
-          <input type="submit" class="btn" value="Submit">
+          <button type="submit" class="btn" :disabled="isSubmitting">
+            <span v-if="isSubmitting">
+              <v-progress-circular indeterminate color="white" size="24"></v-progress-circular> 
+              Submitting...
+            </span>
+            <span v-else>Submit</span>
+          </button>
         </form>
+        <br>
+        <div v-if="submittedData">
+          <hr />
+          <div class="result-box">
+            <b>Output:</b>
+            <pre>{{ submittedData }}</pre>
+          </div>
+        </div>
       </v-card-text>
     </v-card>
   </v-col>
@@ -46,28 +63,41 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 
 const title = ref('');
 const description = ref('');
 const authors = ref('');
-const price = ref(0);
+const price = ref(null);
 const categories = ref([]);
+const coverFile = ref(null);
 const options = [
   { text: 'Belajar Matematika', value: '01' },
   { text: 'Belajar Kimia', value: '02' },
   { text: 'Belajar Fisika', value: '03' }
 ];
 const errors = ref([]);
-const cover = ref(null);
+const isSubmitting = ref(false);
+const submittedData = ref(null);
 
-const submitForm = () => {
+const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    coverFile.value = file;
+  }
+};
+
+const submitForm = async () => {
   errors.value = [];
+  submittedData.value = null;
+  isSubmitting.value = true;
 
   if (title.value.length < 3) errors.value.push('Title minimal 3 karakter!');
   if (description.value.length > 500) errors.value.push('Description maksimal 500 karakter!');
   if (authors.value.length < 3) errors.value.push('Authors minimal 3 karakter!');
   if (price.value < 0) errors.value.push('Price tidak boleh minus!');
   if (categories.value.length === 0) errors.value.push('Pilih minimal 1 category!');
+  if (!coverFile.value) errors.value.push('Cover file harus dipilih!');
 
   if (errors.value.length === 0) {
     const formData = new FormData();
@@ -75,18 +105,48 @@ const submitForm = () => {
     formData.append('description', description.value);
     formData.append('authors', authors.value);
     formData.append('price', price.value);
-    formData.append('categories', categories.value);
-    formData.append('cover', cover.value?.files[0]);
+    formData.append('categories', JSON.stringify(categories.value));
+    formData.append('cover', coverFile.value);
 
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
-        console.log(this.responseText);
+    try {
+      const API_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, '');
+      const res = await axios.post(`${API_URL}/books`, formData);
+      const data = await res.data;
+
+      if (data.cover instanceof File || data.cover instanceof Blob) {
+        data.cover = {
+          name: data.cover.name,
+          type: data.cover.type,
+          size: (data.cover.size / 1024).toFixed(2) + ' KB'
+        };
       }
-    };
-    xhttp.open("POST", "http://localhost/vue/proses.php", true);
-    xhttp.send(formData);
+
+      submittedData.value = {
+        ...data,
+        cover: {
+          name: coverFile.value.name,
+          type: coverFile.value.type,
+          size: (coverFile.value.size / 1024).toFixed(2) + ' KB'
+        }
+      };
+
+      clearForm();
+
+    } catch (err) {
+      console.error(err);
+    }
   }
+
+  isSubmitting.value = false;
+};
+
+const clearForm = () => {
+  title.value = '';
+  description.value = '';
+  authors.value = '';
+  price.value = 0;
+  categories.value = [];
+  coverFile.value = null;
 };
 </script>
 
@@ -140,5 +200,16 @@ ul {
   font-weight: bold;
   margin-bottom: 24px;
   text-align: center;
+}
+
+.result-box {
+  margin-top: 20px;
+  background: #1e1e1e;
+  padding: 16px;
+  border: 1px solid #2b2a2b;
+  border-radius: 8px;
+  color: #cfcfcf;
+  font-family: monospace;
+  white-space: pre-wrap;
 }
 </style>
