@@ -18,12 +18,16 @@
               route: '/tugas/6/handling-submit' 
             },
             { 
-              name: 'Learn: Simple Todo', 
+              name: 'Latihan: Simple Todo', 
               route: '/tugas/6/simple-todo' 
             },
             { 
-              name: 'Latihan Form', 
+              name: 'Latihan: Data Penjualan', 
               route: '/tugas/6/latihan-form' 
+            },
+            { 
+              name: 'Latihan: List', 
+              route: '/tugas/6/latihan-list' 
             },
           ]"
         />

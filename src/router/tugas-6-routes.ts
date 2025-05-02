@@ -5,6 +5,7 @@ import PraktikumDua from "@/views/tugas/6/filtering-data-list.vue";
 import PraktikumTiga from "@/views/tugas/6/handling-submit.vue";
 import PraktikumTodo from "@/views/tugas/6/simple-todo.vue";
 import PraktikumEmpat from "@/views/tugas/6/latihan-form.vue";
+import PraktikumLima from "@/views/tugas/6/latihan-list.vue";
 
 const Tugas6Routes: RouteRecordRaw = {
   path: "6",
@@ -35,6 +36,11 @@ const Tugas6Routes: RouteRecordRaw = {
       path: "latihan-form",
       name: "tugas6-praktikum-empat",
       component: PraktikumEmpat,
+    },
+    {
+      path: "latihan-list",
+      name: "tugas6-praktikum-lima",
+      component: PraktikumLima,
     },
   ],
 };
