@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Penjualan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+    }
+
+    .container {
+      max-width: 600px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+
+    .card {
+      background-color: #2a2a2a;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .card-header {
+      background-color: #2a2a2a;
+      color: #fff;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .form-label {
+      color: #dcdcdc;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:disabled {
+      background-color: #555;
+      border-color: #555;
+    }
+
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .result-box {
+      margin-top: 32px;
+      background-color: #333;
+      padding: 16px;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      font-family: monospace;
+      border: 1px solid #444;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          Form Input Penjualan
+        </div>
+        <form @submit.prevent="handleSubmit">
+          <div class="mb-3">
+            <label for="namaProduk" class="form-label">Nama Produk</label>
+            <input type="text" id="namaProduk" v-model="form.namaProduk" class="form-control" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="deskripsi" class="form-label">Deskripsi Produk</label>
+            <textarea id="deskripsi" v-model="form.deskripsi" class="form-control" rows="3"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="kategori" class="form-label">Kategori</label>
+            <select id="kategori" v-model="form.kategori" class="form-select" required>
+              <option value="">-- Pilih Kategori --</option>
+              <option value="Elektronik">Elektronik</option>
+              <option value="Pakaian">Pakaian</option>
+              <option value="Makanan">Makanan</option>
+              <option value="Aksesoris">Aksesoris</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Metode Pembayaran</label>
+            <div class="form-check">
+              <input type="radio" name="metodePembayaran" value="bank" v-model="form.metodePembayaran" class="form-check-input" required />
+              <label class="form-check-label">Transfer Bank</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" name="metodePembayaran" value="ewallet" v-model="form.metodePembayaran" class="form-check-input" />
+              <label class="form-check-label">E-Wallet</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" name="metodePembayaran" value="cod" v-model="form.metodePembayaran" class="form-check-input" />
+              <label class="form-check-label">COD</label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="harga" class="form-label">Harga (Rp)</label>
+            <input type="number" id="harga" v-model="form.harga" class="form-control" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="tanggal" class="form-label">Tanggal Penjualan</label>
+            <input type="date" id="tanggal" v-model="form.tanggal" :max="maxTanggal" class="form-control" required />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100" :disabled="loading">
+            <span v-if="loading" class="spinner"></span>
+            <span>{{ loading ? 'Submitting...' : 'Submit' }}</span>
+          </button>
+        </form>
+
+        <div v-if="result" class="result-box mt-4">
+          {{ result }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const { createApp, ref, reactive, computed } = Vue;
+
+    createApp({
+      setup() {
+        const form = reactive({
+          namaProduk: '',
+          deskripsi: '',
+          kategori: '',
+          metodePembayaran: '',
+          harga: '',
+          tanggal: ''
+        });
+
+        const loading = ref(false);
+        const result = ref('');
+        const API_URL = 'https://api.vue.xpqx.xyz';
+
+        const maxTanggal = computed(() => {
+          return new Date().toISOString().split('T')[0];
+        });
+
+        const resetForm = () => {
+          form.namaProduk = '';
+          form.deskripsi = '';
+          form.kategori = '';
+          form.metodePembayaran = '';
+          form.harga = '';
+          form.tanggal = '';
+        };
+
+        const handleSubmit = async () => {
+          if (loading.value) return;
+
+          if (!form.namaProduk || !form.kategori || !form.metodePembayaran || !form.harga || !form.tanggal) {
+            alert('Semua field harus diisi!');
+            return;
+          }
+
+          loading.value = true;
+          result.value = '';
+
+          try {
+            const res = await fetch(`${API_URL}/orders`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(form)
+            });
+
+            if (!res.ok) throw new Error('Gagal submit');
+
+            const data = await res.json();
+            result.value = JSON.stringify(data, null, 2);
+            resetForm();
+          } catch (err) {
+            console.error(err);
+            alert('Terjadi kesalahan saat mengirim data.');
+          } finally {
+            loading.value = false;
+          }
+        };
+
+        return { form, handleSubmit, loading, result, maxTanggal };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
