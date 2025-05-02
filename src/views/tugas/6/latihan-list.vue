@@ -54,7 +54,7 @@
             v-model="page"
             :length="pageCount"
             class="mt-4"
-            color="primary"
+            color="white"
           ></v-pagination>
         </v-card-text>
       </v-card>
