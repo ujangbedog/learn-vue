@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lego Shop Online</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="./assets/styles.css" rel="stylesheet" />
+  <!-- Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app" v-cloak>
+    <!-- Navigation Menu -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="./assets/brand-lego.svg" alt="Lego Shop" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" :class="{ active: currentPage === 'home' }" href="#" @click.prevent="currentPage = 'home'">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" :class="{ active: currentPage === 'brand' }" href="#" @click.prevent="currentPage = 'brand'">Brand</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" :class="{ active: currentPage === 'collection' }" href="#" @click.prevent="currentPage = 'collection'">Collection</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+      <!-- Home Page Component -->
+      <component-home v-if="currentPage === 'home'"></component-home>
+      
+      <!-- Brand Page Component -->
+      <component-brand v-if="currentPage === 'brand'" :brands="brands"></component-brand>
+      
+      <!-- Collection Page Component -->
+      <component-collection 
+        v-if="currentPage === 'collection'" 
+        :products="products" 
+        @buy-product="openPurchaseModal"
+      ></component-collection>
+    </main>
+
+    <!-- Purchase Modal -->
+    <div class="modal fade" id="purchaseModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Pembelian Produk</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="processOrder">
+              <div class="mb-3">
+                <label class="form-label">Nama Produk</label>
+                <input type="text" class="form-control" :value="selectedProduct.name" readonly>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Jumlah</label>
+                <input type="number" class="form-control" v-model.number="orderQuantity" min="1" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Harga Satuan</label>
+                <div class="input-group">
+                  <span class="input-group-text">Rp</span>
+                  <input type="text" class="form-control" :value="selectedProduct.price ? selectedProduct.price.toLocaleString('id-ID') : ''" readonly>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Proses</button>
+            </form>
+            
+            <div v-if="showOrderSummary" class="alert alert-success mt-4">
+              <h5>Ringkasan Pesanan</h5>
+              <p><strong>Produk:</strong> {{ selectedProduct.name }}</p>
+              <p><strong>Jumlah:</strong> {{ orderQuantity }}</p>
+              <p><strong>Harga Satuan:</strong> Rp {{ selectedProduct.price ? selectedProduct.price.toLocaleString('id-ID') : '' }}</p>
+              <p class="fs-5 fw-bold">Total Bayar: Rp {{ (selectedProduct.price * orderQuantity).toLocaleString('id-ID') }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container text-center">
+        <p>© 2025 Lego Shop Online - Semua Hak Dilindungi</p>
+        <p>Situs ini dibuat untuk keperluan pendidikan</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Application JS files -->
+  <script type="module">
+    import { createApp } from './assets/app.js';
+    
+    // Initialize the app
+    const app = createApp();
+    app.mount('#app');
+  </script>
+</body>
+</html>

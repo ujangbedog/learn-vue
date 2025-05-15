@@ -1,0 +1,73 @@
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+  background-color: #ffcf00 !important;
+}
+
+.nav-link {
+  color: #0d6efd !important;
+  font-weight: bold;
+}
+
+.nav-link.active {
+  color: #0a4b9c !important;
+  border-bottom: 2px solid #0a4b9c;
+}
+
+.hero-section {
+  background-color: #0a4b9c;
+  color: white;
+  padding: 60px 0;
+}
+
+.card {
+  transition: transform 0.3s;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.brand-logo {
+  height: 150px;
+  object-fit: contain;
+}
+
+.product-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+.modal-header {
+  background-color: #0a4b9c;
+  color: white;
+}
+
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  margin-top: 50px;
+}
+
+.collection-header {
+  background-color: #ffcf00;
+  padding: 30px 0;
+  margin-bottom: 30px;
+}
+
+.filter-bar {
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+[v-cloak] {
+  display: none;
+} 
