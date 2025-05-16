@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LEARN VUE JS | MIXINS</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h2 {
+      color: #00bcd4;
+    }
+
+    #app {
+      max-width: 600px;
+      margin: auto;
+      background-color: #1e1e1e;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+    }
+
+    button {
+      background-color: #00bcd4;
+      border: none;
+      color: #121212;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0097a7;
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    div + div {
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <clock-display></clock-display>
+    <log-message></log-message>
+  </div>
+
+  <script>
+    const timeMixin = {
+      data() {
+        return {
+          currentTime: new Date()
+        };
+      },
+      methods: {
+        formatTime() {
+          const h = this.currentTime.getHours().toString().padStart(2, '0');
+          const m = this.currentTime.getMinutes().toString().padStart(2, '0');
+          const s = this.currentTime.getSeconds().toString().padStart(2, '0');
+          return `${h}:${m}:${s}`;
+        },
+        updateTime() {
+          this.currentTime = new Date();
+        }
+      },
+      mounted() {
+        this.timer = setInterval(this.updateTime, 1000);
+      },
+      unmounted() {
+        clearInterval(this.timer);
+      }
+    };
+
+    const ClockDisplay = {
+      name: 'ClockDisplay',
+      mixins: [timeMixin],
+      template: `
+        <div>
+          <h2>Jam Sekarang:</h2>
+          <p>{{ formatTime() }}</p>
+        </div>
+      `
+    };
+
+    const LogMessage = {
+      name: 'LogMessage',
+      mixins: [timeMixin],
+      template: `
+        <div>
+          <h2>Waktu Dicetak:</h2>
+          <button @click="showTime">Tampilkan Waktu</button>
+        </div>
+      `,
+      methods: {
+        showTime() {
+          alert(`Sekarang jam: ${this.formatTime()}`);
+        }
+      }
+    };
+
+    const app = Vue.createApp({});
+    app.component('clock-display', ClockDisplay);
+    app.component('log-message', LogMessage);
+    app.mount('#app');
+  </script>
+</body>
+</html>
