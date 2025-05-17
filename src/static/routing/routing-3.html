@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 Basic Routing</title>
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Vue Router CDN -->
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <style>
+        .router-link-active {
+            color: #42b983;
+            font-weight: bold;
+        }
+        .page {
+            padding: 20px;
+        }
+        .lego-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .lego-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+        .lego-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .lego-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .lego-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .lego-detail img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .price {
+            font-size: 1.5em;
+            color: #42b983;
+            font-weight: bold;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #42b983;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        /* Transition styles */
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 0.3s ease;
+        }
+        .fade-enter-from,
+        .fade-leave-to {
+            opacity: 0;
+        }
+        .slide-enter-active,
+        .slide-leave-active {
+            transition: transform 0.3s ease;
+        }
+        .slide-enter-from {
+            transform: translateX(100%);
+        }
+        .slide-leave-to {
+            transform: translateX(-100%);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <nav>
+            <router-link to="/">Home</router-link> |
+            <router-link to="/about">About</router-link> |
+            <router-link to="/contact">Contact</router-link> |
+            <router-link to="/legos">LEGOs</router-link>
+        </nav>
+
+        <div class="page">
+            <router-view v-slot="{ Component }">
+                <transition name="fade" mode="out-in">
+                    <component :is="Component" />
+                </transition>
+            </router-view>
+        </div>
+    </div>
+
+    <script type="module">
+        import Home from './components/Home.js'
+        import About from './components/About.js'
+        import Contact from './components/Contact.js'
+        import LegoList from './components/LegoList.js'
+        import LegoDetail from './components/LegoDetail.js'
+
+        // Define routes
+        const routes = [
+            { 
+                path: '/', 
+                component: Home,
+                props: { title: 'Welcome to LEGO Store' }
+            },
+            { 
+                path: '/about', 
+                component: About,
+                props: { title: 'About Us' }
+            },
+            { 
+                path: '/contact', 
+                component: Contact,
+                props: { title: 'Contact Us' }
+            },
+            { 
+                path: '/legos', 
+                component: LegoList,
+                props: { title: 'LEGO Collection' }
+            },
+            { 
+                path: '/lego/:id', 
+                component: LegoDetail,
+                props: true,
+                beforeEnter: (to, from, next) => {
+                    const legoId = to.params.id;
+                    const legoExists = true;
+                    
+                    if (!legoExists) {
+                        next({ name: 'not-found' });
+                    } else {
+                        next();
+                    }
+                }
+            },
+            {
+                path: '/:pathMatch(.*)*',
+                name: 'not-found',
+                component: {
+                    template: '<div class="page"><h2>LEGO tidak ditemukan</h2><router-link to="/legos">Kembali ke daftar LEGO</router-link></div>'
+                }
+            }
+        ]
+
+        // Create router instance
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        })
+
+        // Create Vue app
+        const app = Vue.createApp({})
+
+        // Use router
+        app.use(router)
+
+        // Mount app
+        app.mount('#app')
+    </script>
+</body>
+</html>
+

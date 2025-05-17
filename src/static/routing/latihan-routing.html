@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEARN VUE JS</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Vue Router CDN -->
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .navbar {
+            background-color: #1e1e1e !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .navbar .nav-link {
+            color: #ffffff !important;
+            transition: color 0.3s ease;
+        }
+        .navbar .nav-link:hover {
+            color: #42b983 !important;
+        }
+        .router-link-active {
+            color: #42b983 !important;
+            font-weight: bold;
+        }
+        .page {
+            padding: 2rem;
+            min-height: calc(100vh - 56px);
+        }
+        .lego-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+        .lego-item {
+            background-color: #1e1e1e;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .lego-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .lego-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .lego-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .lego-item p {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            margin-bottom: 0.5rem;
+        }
+        .lego-detail {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+        }
+        .lego-detail h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .lego-detail p {
+            font-size: 0.95rem;
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+        .lego-detail img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .price {
+            font-size: 1.2rem;
+            color: #42b983;
+            font-weight: bold;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            color: #42b983;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-link:hover {
+            color: #3aa876;
+        }
+        /* Transition styles */
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity 0.3s ease;
+        }
+        .fade-enter-from,
+        .fade-leave-to {
+            opacity: 0;
+        }
+        .slide-enter-active,
+        .slide-leave-active {
+            transition: transform 0.3s ease;
+        }
+        .slide-enter-from {
+            transform: translateX(100%);
+        }
+        .slide-leave-to {
+            transform: translateX(-100%);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <i class="bi bi-bricks"></i> LEGO Store
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/">Home</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/about">About</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/contact">Contact</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/legos">LEGOs</router-link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="page">
+            <router-view v-slot="{ Component }">
+                <transition name="fade" mode="out-in">
+                    <component :is="Component" />
+                </transition>
+            </router-view>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="module">
+        import Home from './components/Home.js'
+        import About from './components/About.js'
+        import Contact from './components/Contact.js'
+        import LegoList from './components/LegoList.js'
+        import LegoDetail from './components/LegoDetail.js'
+
+        // Define routes
+        const routes = [
+            { 
+                path: '/', 
+                component: Home,
+                props: { title: 'Welcome to LEGO Store' }
+            },
+            { 
+                path: '/about', 
+                component: About,
+                props: { title: 'About Us' }
+            },
+            { 
+                path: '/contact', 
+                component: Contact,
+                props: { title: 'Contact Us' }
+            },
+            { 
+                path: '/legos', 
+                component: LegoList,
+                props: { title: 'LEGO Collection' }
+            },
+            { 
+                path: '/lego/:id', 
+                component: LegoDetail,
+                props: true,
+                beforeEnter: (to, from, next) => {
+                    const legoId = to.params.id;
+                    const legoExists = true;
+                    
+                    if (!legoExists) {
+                        next({ name: 'not-found' });
+                    } else {
+                        next();
+                    }
+                }
+            },
+            {
+                path: '/:pathMatch(.*)*',
+                name: 'not-found',
+                component: {
+                    template: '<div class="page"><h2>LEGO tidak ditemukan</h2><router-link to="/legos">Kembali ke daftar LEGO</router-link></div>'
+                }
+            }
+        ]
+
+        // Create router instance
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        })
+
+        // Create Vue app
+        const app = Vue.createApp({})
+
+        // Use router
+        app.use(router)
+
+        // Mount app
+        app.mount('#app')
+    </script>
+</body>
+</html>
+
