@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 3 Basic Routing</title>
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Vue Router CDN -->
+    <script src="https://unpkg.com/vue-router@4"></script>
+    <style>
+        .router-link-active {
+            color: #42b983;
+            font-weight: bold;
+        }
+        .page {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <nav>
+            <router-link to="/">Home</router-link> |
+            <router-link to="/about">About</router-link> |
+            <router-link to="/contact">Contact</router-link>
+        </nav>
+
+        <div class="page">
+            <router-view></router-view>
+        </div>
+    </div>
+
+    <script>
+        // Define components
+        const Home = {
+            template: '<div><h2>Home Page</h2><p>Welcome to our website!</p></div>'
+        }
+
+        const About = {
+            template: '<div><h2>About Page</h2><p>This is the about page.</p></div>'
+        }
+
+        const Contact = {
+            template: '<div><h2>Contact Page</h2><p>Contact us at: example@email.com</p></div>'
+        }
+
+        // Define routes
+        const routes = [
+            { path: '/', component: Home },
+            { path: '/about', component: About },
+            { path: '/contact', component: Contact }
+        ]
+
+        // Create router instance
+        const router = VueRouter.createRouter({
+            history: VueRouter.createWebHashHistory(),
+            routes
+        })
+
+        // Create Vue app
+        const app = Vue.createApp({})
+
+        // Use router
+        app.use(router)
+
+        // Mount app
+        app.mount('#app')
+    </script>
+</body>
+</html>
+
