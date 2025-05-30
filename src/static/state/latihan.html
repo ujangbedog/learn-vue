@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LEGO Store - Koleksi LEGO Premium</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Vue & Vuex -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vuex@4.1.0/dist/vuex.global.js"></script>
+  <style>
+    .product-card {
+      transition: transform 0.3s;
+      height: 100%;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .card-img-top {
+      height: 200px;
+      object-fit: contain;
+      padding: 1rem;
+      background-color: #f8f9fa;
+    }
+    .price-tag {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #dc3545;
+    }
+    .navbar-brand {
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .loading-spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="#">LEGO STORE</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-12">
+          <div class="bg-light p-4 rounded">
+            <h1 class="display-5">Koleksi LEGO Premium</h1>
+            <p class="lead">Temukan set LEGO eksklusif dari berbagai seri populer seperti Star Wars, Harry Potter, dan lainnya.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div v-if="isLoading" class="loading-spinner">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      
+      <div v-if="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+      
+      <div v-if="!isLoading && !errorMessage" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div v-for="product in books" :key="product.id" class="col">
+          <div class="card product-card h-100">
+            <img :src="product.image" class="card-img-top" :alt="product.name">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text text-muted mb-3">Set LEGO kolektor dengan desain detail dan tingkat kesulitan tinggi. Cocok untuk penggemar LEGO sejati.</p>
+              <div class="mt-auto">
+                <p class="price-tag mb-2">Rp {{ formatPrice(product.price) }}</p>
+                <button class="btn btn-primary">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div v-if="!isLoading && !errorMessage && books.length === 0" class="text-center my-5">
+        <p class="fs-4">No products found</p>
+      </div>
+    </div>
+    
+    <footer class="bg-dark text-white py-4 mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5>LEGO Store</h5>
+            <p>Toko LEGO premium dengan koleksi terlengkap</p>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <p>&copy; 2023 LEGO Store | ilham alfath. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script type="text/javascript">
+  const { createStore } = Vuex;
+  const { createApp, computed, ref } = Vue;
+  
+  const store = createStore({
+    state() {
+      return {
+        books: [],
+        isLoading: false,
+        error: null
+      }
+    },
+    mutations: {
+      setBooks(state, books) {
+        state.books = books;
+      },
+      setLoading(state, status) {
+        state.isLoading = status;
+      },
+      setError(state, error) {
+        state.error = error;
+      }
+    },
+    actions: {
+      getBooks({ commit }) {
+        commit('setLoading', true);
+        commit('setError', null);
+        
+        return new Promise((resolve, reject) => {
+          const baseUrl = window.location.origin;
+          const jsonUrl = `${baseUrl}/assets/json/products.json`;
+          
+          console.log('Requesting JSON from:', jsonUrl);
+          
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', jsonUrl);
+          
+          xhr.onload = function() {
+            if (xhr.status === 200) {
+              const data = JSON.parse(xhr.responseText);
+              commit('setBooks', data);
+              commit('setLoading', false);
+              resolve(data);
+            } else {
+              const error = 'Failed to fetch products: ' + xhr.statusText;
+              commit('setError', error);
+              commit('setLoading', false);
+              reject(new Error(error));
+            }
+          };
+          
+          xhr.onerror = function() {
+            const error = 'Network error occurred';
+            commit('setError', error);
+            commit('setLoading', false);
+            reject(new Error(error));
+          };
+          
+          xhr.send();
+        });
+      }
+    },
+    getters: {
+      books: state => state.books,
+      isLoading: state => state.isLoading,
+      error: state => state.error
+    }
+  });
+  
+  const app = createApp({
+    computed: {
+      books() {
+        return store.getters.books;
+      },
+      isLoading() {
+        return store.getters.isLoading;
+      },
+      errorMessage() {
+        return store.getters.error;
+      }
+    },
+    methods: {
+      formatPrice(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+    },
+    created() {
+      store.dispatch('getBooks')
+        .then(data => console.log('Products loaded:', data.length))
+        .catch(error => console.error(error));
+    }
+  });
+  
+  app.use(store);
+  app.mount('#app');
+  </script>
+</body>
+</html>

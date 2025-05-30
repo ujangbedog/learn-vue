@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LEARN VUE JS</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vuex@4.1.0/dist/vuex.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h2>Daftar Produk</h2>
+    <ul>
+      <li v-for="book in books" :key="book.id">
+        {{ book.name }} - Rp {{ formatPrice(book.price) }}
+      </li>
+    </ul>
+  </div>
+
+  <script type="text/javascript">
+  const { createStore } = Vuex;
+  const { createApp, computed } = Vue;
+  
+  const store = createStore({
+    state() {
+      return {
+        books: []
+      }
+    },
+    mutations: {
+      setBooks(state, books) {
+        state.books = books;
+      }
+    },
+    actions: {
+      getBooks({ commit }) {
+        return new Promise((resolve, reject) => {
+          const baseUrl = window.location.origin;
+          const jsonUrl = `${baseUrl}/assets/json/products.json`;
+          
+          console.log('Requesting JSON from:', jsonUrl);
+          
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', jsonUrl);
+          
+          xhr.onload = function() {
+            if (xhr.status === 200) {
+              const data = JSON.parse(xhr.responseText);
+              commit('setBooks', data);
+              resolve(data);
+            } else {
+              reject(new Error('Failed to fetch books: ' + xhr.statusText));
+            }
+          };
+          
+          xhr.onerror = function() {
+            reject(new Error('Network error occurred'));
+          };
+          
+          xhr.send();
+        });
+      }
+    },
+    getters: {
+      books: state => state.books
+    }
+  });
+  
+  const app = createApp({
+    computed: {
+      books() {
+        return store.getters.books;
+      }
+    },
+    methods: {
+      formatPrice(price) {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+    },
+    created() {
+      store.dispatch('getBooks')
+        .then(data => console.log('Books loaded:', data.length))
+        .catch(error => console.error(error));
+    }
+  });
+  
+  app.use(store);
+  app.mount('#app');
+  </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LEARN VUE JS</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 300px;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .preview {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h2>Two-Way Data Binding dengan v-model</h2>
+    
+    <div class="form-group">
+      <label for="name">Nama:</label>
+      <input type="text" id="name" v-model="name">
+    </div>
+    
+    <div class="preview">
+      <h3>Preview:</h3>
+      <p>Nama: {{ name }}</p>
+    </div>
+    
+    <button @click="resetName">Reset Nama</button>
+    <button @click="setUppercase">Set Uppercase</button>
+  </div>
+
+  <script type="text/javascript">
+  const { createApp, computed } = Vue;
+  
+  const app = createApp({
+    data() {
+      return {
+        internalName: 'ilham alfath'
+      }
+    },
+    computed: {
+      name: {
+        get() {
+          console.log('Getter dipanggil');
+          return this.internalName;
+        },
+        set(newValue) {
+          console.log('Setter dipanggil dengan nilai:', newValue);
+          this.internalName = newValue;
+        }
+      }
+    },
+    methods: {
+      resetName() {
+        this.name = 'John Doe';
+      },
+      setUppercase() {
+        this.name = this.name.toUpperCase();
+      }
+    }
+  });
+  
+  app.mount('#app');
+  </script>
+</body>
+</html>

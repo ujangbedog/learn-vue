@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LEARN VUE JS</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vuex@4.1.0/dist/vuex.global.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="module">
+  import { Counter } from './CounterComponent.js';
+  
+  const { createStore } = Vuex;
+  const { createApp } = Vue;
+  
+  const store = createStore({
+    state() {
+      return {
+        counter: 0
+      }
+    },
+    mutations: {
+      increment: state => state.counter++
+    }
+  });
+  
+  // Aplikasi utama
+  const app = createApp({
+    components: {
+      Counter
+    },
+    template: `
+      <div>
+        <h2>Counter App</h2>
+        <Counter />
+      </div>
+    `
+  });
+  
+  app.use(store);
+  app.mount('#app');
+  </script>
+</body>
+</html>
